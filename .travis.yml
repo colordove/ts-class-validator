@@ -12,6 +12,6 @@ cache:
 script: 
   - yarn run build
   - npm install codecov -g
-  - codecov -f coverage/*.json
+  - npm run test
 after_success:
   - codecov
