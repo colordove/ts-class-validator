@@ -21,6 +21,26 @@ class NameClass {
   public name: string;
 }
 
+class ValidateIsClass {
+  @validate(is.email())
+  public email: string;
+
+  @validate(is.base64())
+  public base64: WindowBase64;
+
+  @validate(is.ascii())
+  public ascii: string;
+
+  @validate(is.after())
+  public date: Date;
+
+  @validate(is.port())
+  public port: string;
+
+  @validate(is.dataURI())
+  public dataURI: string;
+}
+
 class NestedClass {
   @validate(is.class(IdClass))
   public id: IdClass;
@@ -85,6 +105,41 @@ test("is string", () => {
   expect(isClass(NameClass, { name: "360" })).not.toBe(true);
   expect(isClass(NameClass, { name: "13602545698" })).not.toBe(true);
   expect(isClass(NameClass, { name: "sdfsdfs" })).not.toBe(true);
+});
+
+test("is email", () => {
+  expect(isClass(ValidateIsClass, { email: "jason@gmail.com" })).toBe(true);
+  expect(isClass(ValidateIsClass, { email: 'jason@gmail' })).not.toBe(true);
+});
+
+test("is base64", () => {
+  expect(isClass(ValidateIsClass, { base64: "i am not base64" })).not.toBe(true);
+});
+
+test("is ascii", () => {
+  // expect(isClass(ValidateIsClass, { ascii: "\u4f60\u597d" })).toBe(true);
+  expect(isClass(ValidateIsClass, { ascii: "你好" })).not.toBe(true);
+});
+
+test("is after", () => {
+  // expect(isClass(ValidateIsClass, { base64: "\u4f60\u597d" })).toBe(true);
+  expect(isClass(ValidateIsClass, { date: new Date() })).not.toBe(true);
+});
+
+test("is port", () => {
+  expect(isClass(ValidateIsClass, { port: '8080' })).toBe(true);
+  expect(isClass(ValidateIsClass, { port: '65536' })).toMatch('is port');
+  expect(isClass(ValidateIsClass, { port: '65536' })).not.toBe(true);
+});
+
+test("is dataURI", () => {
+  expect(isClass(ValidateIsClass, { dataURI: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==' })).toBe(true);
+  expect(isClass(ValidateIsClass, { dataURI: 'string' })).toMatch('is dataURI');
+  expect(isClass(ValidateIsClass, { dataURI: 'string' })).not.toBe(true);
+});
+
+test("is number", () => {
+  expect(isClass(NameClass, { name: "360sdfsdf" })).toBe(true);
 });
 
 test("nexted class", () => {
