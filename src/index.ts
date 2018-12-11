@@ -588,8 +588,8 @@ const LocaleErrorMessages = {
     not: (target: object, key: string, ...rest: any[]) => `${target[key]} is not currency`,
   },
   dataURI: {
-    is: (target: object, key: string, ...rest: any[]) => `${target[key]} is date URI`,
-    not: (target: object, key: string, ...rest: any[]) => `${target[key]} is not date URI`,
+    is: (target: object, key: string, ...rest: any[]) => `${target[key]} is dataURI`,
+    not: (target: object, key: string, ...rest: any[]) => `${target[key]} is not dataURI`,
   },
   email: {
     is: (target: object, key: string, ...rest: any[]) => `${target[key]} is email`,
