@@ -39,6 +39,9 @@ class ValidateIsClass {
 
   @validate(is.dataURI())
   public dataURI: string;
+
+  @validate(is.creditCard())
+  public creditCard: string;
 }
 
 class NestedClass {
@@ -136,6 +139,11 @@ test("is dataURI", () => {
   expect(isClass(ValidateIsClass, { dataURI: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==' })).toBe(true);
   expect(isClass(ValidateIsClass, { dataURI: 'string' })).toMatch('is dataURI');
   expect(isClass(ValidateIsClass, { dataURI: 'string' })).not.toBe(true);
+});
+
+test("is creditCard", () => {
+  expect(isClass(ValidateIsClass, { creditCard: '5105105105105100' })).toBe(true);
+  expect(isClass(ValidateIsClass, { creditCard: 'string' })).not.toBe(true);
 });
 
 test("is number", () => {
